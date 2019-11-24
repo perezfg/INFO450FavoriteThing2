@@ -5,32 +5,46 @@
 using namespace std;
 
 int main() {
+	//Welcome
 	cout << "Welcome!!! This is a program that will store your favorite cars.\nYou will input a year, make, model, price and engine configuration." << endl;
 	//creating the object
 	AutomobileList myCars;
-	//creating each object of car 
-	string choice = "yes";
-	int count = 0;
+	int choice = 0;
 	do {
-		myCars.addItem();
-		cout << "Would you like to continue?" << endl;
+		//User menu loop to only exit when value is 5 and continue if value is 1-4
+		cout << "Please choose from the following menu;\nEnter 1 to Read from a file\nEnter 2 to Add a new favorite thing to current list\nEnter 3 to Show current list\nEnter 4 to Save current list to the file\nEnter 5 to exit..." << endl;
 		cin >> choice;
-		count++;
-	} while (choice =="yes");
-	//comparing the objects to see if they are duplicates in every field
-	while (myCars.compareItems()) {
-		cout << "Please re-enter favorite car details but do not create duplicates..." << endl;
-		//getting user input again to start over
-		count = 0;
-		do {
+		//Choice one being able to read from a file with | as the split
+		if (choice == 1) {
+			string filepath;
+			cout << "Please enter an input file path and be exact" << endl;
+			cin.ignore();
+			getline(cin,filepath);
+			myCars.readFromFile(filepath);
+			/*while (myCars.compareItems()) {
+				cout << "Duplicate found" << endl;
+				//getting user input again to start over
+			}*/
+		}
+		//creating object of car that you want to create
+		if (choice == 2) {
 			myCars.addItem();
-			cout << "Would you like to continue?" << endl;
-			cin >> choice;
-			count++;
-		} while (choice == "yes");
-	}
-	//showing the total price of all cars added and values in each object
-	myCars.showList();
+		}
+		//showing the list of objects that have been read in.
+		if (choice == 3) {
+			myCars.showList();
+		}
+		//Entering an output file path to write/save to
+		if (choice == 4) {
+			string filepath;
+			cout << "Please enter an output file path and be exact" << endl;
+			cin.ignore();
+			getline(cin, filepath);
+			myCars.writeToFile(filepath);
+		}
+
+	} while (choice != 5&&choice<5&&choice>1);
+	cout << "You entered to quit, have a good day!" << endl;
 	system("pause");
 	return 0;
 }
